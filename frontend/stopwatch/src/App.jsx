@@ -8,10 +8,14 @@ function App() {
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
-      isTicking ? setElapsedTime((elapsedTime) => elapsedTime + 1000) : null;
-    }, 1000);
-  }, []);
+    let interval = setInterval(() => {
+      if (isTicking) {
+        setElapsedTime((elapsedTime) => elapsedTime + 10);
+      }
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, [isTicking]);
 
   return (
     <div className="container">
@@ -22,9 +26,9 @@ function App() {
             setIsTicking((isTicking) => !isTicking);
           }}
         >
-          Play/Pause
+          {isTicking ? "Pause" : "Play"}
         </button>
-        <button onClick={() => {}}>Reset</button>
+        <button onClick={() => {setElapsedTime(0)}}>Reset</button>
       </div>
 
       <div>{elapsedTime}</div>
