@@ -7,6 +7,28 @@ function App() {
   const [isTicking, setIsTicking] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
 
+  // Convert time to a format of hours, minutes, seconds, and milliseconds
+
+function timeToString(time) {
+  let diffInHrs = time / 3600000;
+  let hh = Math.floor(diffInHrs);
+
+  let diffInMin = (diffInHrs - hh) * 60;
+  let mm = Math.floor(diffInMin);
+
+  let diffInSec = (diffInMin - mm) * 60;
+  let ss = Math.floor(diffInSec);
+
+  let diffInMs = (diffInSec - ss) * 100;
+  let ms = Math.floor(diffInMs);
+
+  let formattedMM = mm.toString().padStart(2, "0");
+  let formattedSS = ss.toString().padStart(2, "0");
+  let formattedMS = ms.toString().padStart(2, "0");
+
+  return `${formattedMM}:${formattedSS}:${formattedMS}`;
+}
+
   useEffect(() => {
     let interval = setInterval(() => {
       if (isTicking) {
@@ -31,7 +53,7 @@ function App() {
         <button onClick={() => {setElapsedTime(0)}}>Reset</button>
       </div>
 
-      <div>{elapsedTime}</div>
+      <div>{timeToString(elapsedTime)}</div>
     </div>
   );
 }
